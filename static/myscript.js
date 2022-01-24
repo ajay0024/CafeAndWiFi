@@ -69,7 +69,9 @@ function add_filters() {
     filters.each(function() {
       state = $(this).hasClass("active");
       if(state){
-        console.log($(this).find("input"));
+        $(this).find("input").val("True");
+      }
+      else{
         $(this).find("input").val("True");
       }
     });
