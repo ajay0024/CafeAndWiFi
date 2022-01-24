@@ -1,0 +1,143 @@
+body {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 50px;
+}
+
+#footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  /* Height of the footer*/
+}
+
+.navbar .fa-mug-hot {
+  color: #DE834D;
+}
+
+.navbar .fa-wifi {
+  color: #CCD1E4;
+}
+
+.card .cafe-image {
+  height: 8.5rem;
+  width: 100%;
+  object-fit: cover;
+
+}
+
+.data {
+  height: 100vh;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  /* Firefox */
+}
+
+.data::-webkit-scrollbar {
+  width: 8px;
+  background-color: #eee;
+  /* or add it to the track */
+}
+
+/* Add a thumb */
+.data::-webkit-scrollbar-thumb {
+  background: #aaa;
+}
+
+.prod_filters .fas {
+  font-size: 2rem;
+}
+
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+  min-height: 500px;
+  width: 100%;
+  height: 100%;
+}
+
+.img-container {
+  position: relative;
+}
+
+.img-container:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+  /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */
+}
+
+.img-container img {
+  position: absolute;
+  /* Take your picture out of the flow */
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* Make the picture taking the size of it's parent */
+  width: 100%;
+  /* This if for the object-fit */
+  height: 100%;
+  /* This if for the object-fit */
+  object-fit: cover;
+  /* Equivalent of the background-size: cover; of a background-image */
+  object-position: center;
+  cursor: pointer;
+}
+
+img.unselected:hover {
+  box-shadow: 0 0 20px;
+}
+
+img.selected {
+  box-shadow: 0 0 0 4px rgba(0, 0, 155, 0.5);
+}
+
+#coffee-button {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 1030;
+}
+.cafe-link{
+  cursor: pointer;
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left: 0;
+
+  z-index: 1;
+}
+
+#cafe-top div{
+  max-height: 70vh;
+  position: relative;
+}
+#cafe-name{
+  position: absolute;
+  bottom: 5%;
+  color: white;
+}
+#cafe-top img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2rem;
+}
+.red{
+  color: red;
+}
+.green{
+  color:green;
+}
+.large-icons{
+  font-size: 2rem;
+}
+#cafe{
+  font-size: 1.25rem
+}
+.main-cities{
+  text-align: center;
+
+}

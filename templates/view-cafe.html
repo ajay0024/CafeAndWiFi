@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% include "deletion-modal.html"%}
+{% block content %}
+{{super()}}
+
+<div id="cafe" class="container-fluid px-5 py-2 mb-5" data-sockets={{cafe.has_sockets}} data-wifi={{cafe.has_wifi}} data-calls={{cafe.can_take_calls}} data-toilets={{cafe.has_toilet}} data-map_url={{cafe.map_url}} data-id={{cafe.id}}
+  data-lat={{cafe.lat}} data-long={{cafe.long}} data-address={{cafe.address}}>
+  <div class="row mb-3" id="cafe-top">
+    <div class="col">
+      <img src={{cafe.img_url}} alt="Pop">
+      <h1 id="cafe-name" class="fw-bold text-uppercase h1"> {{cafe.name}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 detail">
+      <p class="h3 fw-bold text-uppercase mb-3"> Address </p>
+      <p class="text">{{cafe.location}}, {{cafe.city}}</p>
+
+      <p class="h3 fw-bold text-uppercase mb-3 pt-3 border-top"> Productivity </p>
+      <div class="row">
+        <div class="col-2 h3">
+          <i class="fas fas fa-plug mx-3 {{"green" if cafe.has_sockets else "red"}}"></i>
+        </div>
+        <div class="col-10 mb-3">
+          {{"Sockets are Available" if cafe.has_sockets else "Sockets are not Available"}}
+        </div>
+
+        <div class="col-2 h3">
+          <i class="fas fa-wifi mx-3 {{"green" if cafe.has_wifi else "red"}}"></i>
+        </div>
+        <div class="col-10 mb-3">
+          {{"WiFi is Available" if cafe.has_wifi else "WiFi is not Available"}}
+        </div>
+
+        <div class="col-2 h3">
+          <i class="fas fa-phone-volume mx-3 {{"green" if cafe.can_take_calls else "red"}}"></i>
+        </div>
+        <div class="col-10 mb-3">
+          {{"You Can Take Calls" if cafe.can_take_calls else "You Can not take Calls"}}
+        </div>
+        <div class="col-2 h3">
+          <i class="fas fa-toilet mx-3 {{"green" if cafe.has_toilet else "red"}}"></i>
+        </div>
+        <div class="col-10 mb-3">
+          {{"Toilet are Available" if cafe.has_toilet else "Toilet are not Available"}}
+        </div>
+
+
+
+      </div>
+      <div class="row h3 fw-bold text-uppercase mb-3 pt-3 border-top">
+        <div class="col-6">
+           Coffee Price
+        </div>
+        <div class="col-6">
+          {{cafe.coffee_price}}
+        </div>
+      </div>
+
+      <div class="row h3 fw-bold text-uppercase mb-3 pt-3 border-top">
+        <div class="col-6">
+           Number of Seats
+        </div>
+        <div class="col-6">
+          {{cafe.seats}}
+        </div>
+      </div>
+      {%if current_user.is_authenticated and current_user.id == cafe.author.id%}
+      <div class="row h3 mb-3 pt-3 border-top">
+        <div class="col-6 ">
+          <a href={{url_for("edit_cafe",cafe_id=cafe.id)}} role=button class="btn btn-dark btn-lg">Edit Venue</a>
+        </div>
+        <div class="col-6  text-end">
+          <a href="#" data-bs-toggle="modal" data-bs-target="#deletionModal" role=button class="btn btn-danger btn-lg">Delete Venue</a>
+        </div>
+
+      </div>
+      {%endif%}
+    </div>
+
+    <div class="col-md-6">
+      <div class="" id="map">
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+{% endblock %}

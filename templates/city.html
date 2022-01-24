@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+{{super()}}
+<div class="container-fluid main-data mb-5">
+  <div class="row">
+    <!-- Left -->
+    <div class="col col-lg-3">
+      <h2 class="fw-bold text-uppercase">Filters</h2>
+      <h4 class="fw-bold text-uppercase">Productivity</h4>
+      <div class="row prod_filters">
+        <div class="col-6 col-lg-4 my-2">
+          <div class="btn btn-outline-dark w-100" data-filter="data-sockets">
+            <div class="">
+              <i class="fas fa-plug"></i>
+            </div>
+            Sockets
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-4 my-2">
+          <div class="btn btn-outline-dark w-100" data-filter="data-wifi">
+            <div class="">
+              <i class="fas fa-wifi"></i>
+            </div>
+            WiFi
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-4 my-2">
+          <div class="btn btn-outline-dark w-100" data-filter="data-calls">
+            <div class="">
+              <i class="fas fa-phone-volume"></i>
+            </div>
+            Call
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-4 my-2">
+          <div class="btn btn-outline-dark w-100" data-filter="data-toilets">
+            <div class="">
+              <i class="fas fa-toilet"></i>
+            </div>
+            Toilets
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Middle -->
+    <div class="col col-lg-5 data" tabindex="0">
+      <h2 class="fw-bold text-uppercase">{{ city }}</h2>
+      <div class="city-explanation">
+        The best work and study-friendly cafes, restaurants, and hotel lobbies in {{city}}. Find venues with free and reliable Wi-Fi hotspots, ample power sockets, and comfy seating areas.
+      </div>
+      <div class="number-of-cafes h2 mt-4 fw-bold text-uppercase">
+        <span id="cafes-count">{{cafes|count}}</span> work-friendly cafes
+      </div>
+
+      <ul class="list-group list-group-flush px-0 places">
+
+        {%for cafe in cafes%}
+
+        <div class="card mb-3" data-sockets={{cafe.has_sockets}} data-wifi={{cafe.has_wifi}} data-calls={{cafe.can_take_calls}} data-toilets={{cafe.has_toilet}} data-map_url={{cafe.map_url}} data-id={{cafe.id}} data-lat={{cafe.lat}} data-long={{cafe.long}} >
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src={{cafe.img_url}} class="img-fluid rounded-start cafe-image" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title cafe-name">{{cafe.name}}</h5>
+                <div class="card-text"><small><i class="fas fa-map-marker-alt me-1"></i>{{cafe.location}}</small></div>
+                <div class="card-text facilities">
+
+                  <i class="fas fa-plug {{"text-danger" if not cafe.has_sockets}}"></i>
+                  <i class="fas fa-wifi {{"text-danger" if not cafe.has_wifi}}"></i>
+                  <i class="fas fa-phone-volume {{"text-danger" if not cafe.can_take_calls}}"></i>
+                  <i class="fas fa-toilet {{"text-danger" if not cafe.has_toilet}}"></i>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href={{url_for("view_cafe",id=cafe.id)}}>
+            <span class="cafe-link"></span>
+          </a>
+        </div>
+
+        {% endfor%}
+      </ul>
+
+    </div>
+    <div class="col col-lg-4 px-0">
+      <div id="map"></div>
+
+      <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+
+    </div>
+  </div>
+</div>
+{% endblock %}

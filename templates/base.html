@@ -1,0 +1,87 @@
+{% extends "my-bootstrap.html" %}
+{% block title %}
+{{super()}}
+☕💻Cafe and WiFi
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href={{url_for("home")}}>
+      <i class="fas fa-mug-hot"><i class="fas fa-wifi"></i></i> Cafe And WiFi
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse me-auto" id="navbarSupportedContent">
+      <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+        {%if not current_user.is_authenticated: %}
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#registrationModal"><i class="fas fa-file-invoice"></i> Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </li>
+        {% else: %}
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-bs-toggle="modal"><i class="fas fa-user-circle"></i> {{current_user.email}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('logout')}}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('add_cafe')}}"><i class="fa fa-plus"></i> Add New Cafe </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+{% block content %}
+{{super()}}
+{%if not current_user.is_authenticated: %}
+{%include 'modals.html'%}
+{%endif%}
+{% endblock %}
+{% block footer %}
+{{super()}}
+
+<div id="coffee-button" class=" my-4 ">
+  <a class="float-end " href="https://www.buymeacoffee.com/todo" target="_blank" i><img class="shadow rounded-pill" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
+      style="height: 60px !important;width: 217px !important;"></a>
+</div>
+
+<div id="footer">
+  <div class="d-flex nav justify-content-between pt-4 mt-4 border-top ">
+    <ul class="list-unstyled d-flex fs-3">
+      <li class="ms-3"><a class="text-muted" href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a></li>
+      <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/pyrevworld/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+      <li class="ms-3"><a class="text-muted" href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+    </ul>
+    <p>&copy; 2021 Company, Inc. All rights reserved.</p>
+    <p></p>
+  </div>
+</div>
+
+
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+
+
+
+
+{{super()}}
+<script src="{{url_for('.static', filename='myscript.js')}}"></script>
+<script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AnL8qq7Xiki_iadsL8PKYOSfE5nQP1zQIrXDU8yUh-xf8lHDdVIf_8iHR3yn_zwz' async defer></script>
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='mystyle.css')}}">
+<script src="https://kit.fontawesome.com/45dfc899a2.js" crossorigin="anonymous"></script>
+{% endblock %}

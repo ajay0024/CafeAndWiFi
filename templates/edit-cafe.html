@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block content %}
+{{super()}}
+<div class="container-fluid px-5 py-2 mb-5">
+  <form class=" " action={{url_for("edit_cafe",cafe_id=cafe.id)}} method="post">
+    <div class="row">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+    </div>
+
+    <div class="row">
+      <div class="col-6 px-4" id="suggestion">
+        <div class="section-header mb-5 ">
+          <h2 class="fw-bold text-uppercase">Edit the Place</h2>
+          <div class="">
+            Update the venue
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" name="name" class="form-control" id="searchResultName" aria-describedby="search Name" value="{{cafe.name}}" readonly>
+        </div>
+        <div class="mb-3 ">
+          <label class="form-label">Address</label>
+          <input type="text" name="address" class="form-control" id="searchResultAddress" aria-describedby="search Address" value="{{cafe.location}}" readonly>
+        </div>
+        <div class="mb-3 ">
+          <label class="form-label">City</label>
+          <input type="text" name="city" class="form-control" id="searchResultCity" aria-describedby="search Locality" value="{{cafe.city}}" readonly>
+        </div>
+        <div class="mb-3 ">
+          <label class="form-label">Country</label>
+          <input type="text" name="country" class="form-control" id="searchResultCountry" aria-describedby="search Country" value="{{cafe.country}}" readonly>
+        </div>
+
+        <div class="mb-3 ">
+          <!-- <label class="col-form-label col-sm-3" for="price">Price per Coffee</label> -->
+          <div class="col-sm-7 input-group mb-3 ">
+            <span class="input-group-text">Price per Coffee</span>
+            <span class="input-group-text">$</span>
+            <input type="text" name="price" placeholder="1.50" class="form-control" aria-label="Amount"  pattern="\d{1,4}(\.\d{0,2})?" maxlength="7" title="Enter number below 10000 upto 2 decimal place" value="{{cafe.coffee_price|trim('$')}}" required>
+          </div>
+        </div>
+
+        <div class="mb-3 ">
+          <!-- <label class="form-label">Seats</label> -->
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Select number of Seats</label>
+            <select class="form-select" id="numberOfSeats" name="seats"  required>
+              <option value="">Choose...</option>
+              <option value="0-10" {{'selected' if cafe.seats == "0-10"}}>0-10</option>
+              <option value="10-20" {{'selected' if cafe.seats == "10-20"}}>10-20</option>
+              <option value="20-30" {{'selected' if cafe.seats == "20-30"}}>20-30</option>
+              <option value="30-40" {% if cafe.seats == "30-40"%} selected {%endif%}>30-40</option>
+              <option value="40-50" {{'selected' if cafe.seats == "40-50"}}>40-50</option>
+              <option value="50-70" {{'selected' if cafe.seats == "50-70"}}>50-70</option>
+              <option value="70-100" {{'selected' if cafe.seats == "70-100"}}>70-100</option>
+              <option value="100+" {{'selected' if cafe.seats == "100+"}}>100+</option>
+
+            </select>
+          </div>
+        </div>
+
+        <input type="hidden" name="lat" id="searchResultLat" value="">
+        <input type="hidden" name="long" id="searchResultLong" value="">
+
+        <div class="mb-3 " id="filters">
+          <label class="form-label">Select the facilities available in the Venue</label>
+
+          <div class="row">
+
+            <div class="col-2 my-2">
+              <div class="btn btn-outline-dark w-100" data-filter="data-sockets">
+                <div class="">
+                  <i class="fas fa-plug"></i>
+                </div>
+                <input type="hidden" name="sockets" value={{cafe.has_sockets}}>
+                Sockets
+              </div>
+            </div>
+
+            <div class="col-2 my-2">
+              <div class="btn btn-outline-dark w-100" data-filter="data-wifi">
+                <div class="">
+                  <i class="fas fa-wifi"></i>
+                </div>
+                <input type="hidden" name="wifi" value={{cafe.has_wifi}}>
+                WiFi
+              </div>
+            </div>
+
+            <div class="col-2 my-2">
+              <div class="btn btn-outline-dark w-100" data-filter="data-calls">
+                <div class="">
+                  <i class="fas fa-phone-volume"></i>
+                </div>
+                <input type="hidden" name="calls" value={{cafe.can_take_calls}}>
+                Call
+              </div>
+            </div>
+
+            <div class="col-2 my-2">
+              <div class="btn btn-outline-dark w-100" data-filter="data-toilets">
+                <div class="">
+                  <i class="fas fa-toilet"></i>
+                </div>
+                <input type="hidden" name="toilet" value={{cafe.has_toilet}}>
+                Toilets
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-6">
+        <div class="" id="map">
+        </div>
+      </div>
+    </div>
+
+    <div class="row my-5" id="image-selected">
+      <label class="form-label h3">Selected Image</label>
+      <div class="col-2 img-container mx-3">
+        <img class="unselected" src="{{cafe.img_url}}" alt="Loading Image.." width="100%" >
+      </div>
+    </div>
+
+    <div class="row my-5" id="image-selection">
+      <label class="form-label h3">Select Image</label>
+      <input type="hidden" name="image-link" value={{cafe.img_url}} required>
+      <div class="col-2 img-container mx-3">
+      </div>
+      <div class="col-2 img-container  mx-3">
+      </div>
+      <div class="col-2 img-container mx-3">
+      </div>
+      <div class="col-2 img-container mx-3">
+      </div>
+      <div class="col-2 img-container mx-3">
+      </div>
+    </div>
+
+    <div class="row my-3 d-none">
+      <div class="col-12">
+        <button type="submit" class="btn btn-dark btn-lg">Edit place</button>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+{% endblock %}

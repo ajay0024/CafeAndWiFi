@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+{{super()}}
+<div class="container-fluid mb-5 main-cities text-uppercase">
+  <h1 class="my-5 fw-bolder">All Cities</h1>
+  {%for country, cities in locations.items() :%}
+  <div class="country-name my-3 ">
+    <h3 class="fw-bold">{{country}}</h3>
+  </div>
+  <div class="cities-name mb-5">
+    {%for city in cities%}
+    <a role="button" href={{url_for("city",city_name=city)}} class="btn btn-outline-secondary" name="button">{{city}}</a>
+    {%endfor%}
+  </div>
+  {%endfor%}
+
+</div>
+{% endblock %}
