@@ -1,14 +1,10 @@
-import json
-
 import flask
 from flask import Flask, render_template, redirect, url_for, request, flash, abort
-# import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import LoginForm, RegisterForm
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from sqlalchemy.orm import relationship
-from datetime import datetime
 import os, requests, re
 
 app = Flask(__name__)
