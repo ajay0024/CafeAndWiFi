@@ -72,7 +72,7 @@ function add_filters() {
         $(this).find("input").val("True");
       }
       else{
-        $(this).find("input").val("True");
+        $(this).find("input").val("False");
       }
     });
   });
